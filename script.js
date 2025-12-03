@@ -276,20 +276,25 @@ window.addEventListener("scroll", () => {
 
 btnSubir.addEventListener("click", () => {
     if (isDesktop) {
-        // tu animación de desktop ya funciona
-        const scrollStep = () => {
+        // Desktop: animación smooth
+        isButtonScrolling = true;       // bloquea scroll manual
+        const scrollAnim = () => {
             const current = window.scrollY;
-            if (current > 0) {
-                window.scrollTo(0, current - Math.max(10, current * 0.2));
-                requestAnimationFrame(scrollStep);
+            const diff = targetScroll - current;
+
+            if (Math.abs(diff) > 0.5) {
+                window.scrollBy(0, diff * 0.2);
+                requestAnimationFrame(scrollAnim);
             } else {
                 window.scrollTo(0, 0);
                 targetScroll = 0;
+                isButtonScrolling = false;
             }
         };
-        scrollStep();
+        targetScroll = 0;
+        scrollAnim();
     } else {
-        // Móvil: usar scroll nativo suave
+        // Móvil: scroll nativo, seguro para zoom
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 });
