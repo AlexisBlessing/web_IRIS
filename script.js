@@ -276,12 +276,22 @@ window.addEventListener("scroll", () => {
 
 btnSubir.addEventListener("click", () => {
     if (isDesktop) {
-        isButtonScrolling = true;
-        targetScroll = 0;
+        const scrollStep = () => {
+            const current = window.scrollY;
+            if (current > 0) {
+                window.scrollTo(0, current - Math.max(10, current * 0.2)); // nunca menor a 10px
+                requestAnimationFrame(scrollStep);
+            } else {
+                window.scrollTo(0, 0);
+                targetScroll = 0; // sincroniza targetScroll
+            }
+        };
+        scrollStep();
     } else {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 });
+
 
 
 
