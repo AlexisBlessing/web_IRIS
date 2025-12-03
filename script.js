@@ -204,30 +204,86 @@ window.addEventListener('scroll', () => {
 // --- Scroll suave para desktop ---
 
 let targetScroll = window.scrollY;
+let isWheelScrolling = false;
+let isButtonScrolling = false;
+let wheelTimeout = null;
 
-if (window.innerWidth >= 1200) {
+const isDesktop = window.innerWidth >= 1200;
 
-    window.addEventListener('wheel', (e) => {
+if (isDesktop) {
+
+    // Mantener targetScroll sincronizado con scroll manual
+    window.addEventListener("scroll", () => {
+        if (!isWheelScrolling && !isButtonScrolling) {
+            targetScroll = window.scrollY;
+        }
+    });
+
+    // Scroll por rueda (override del scroll manual)
+    window.addEventListener("wheel", (e) => {
         e.preventDefault();
 
-        targetScroll += e.deltaY * 0.6;           // velocidad del scroll
+        isWheelScrolling = true;
+        isButtonScrolling = false;
 
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        targetScroll += e.deltaY * 0.6;
+
+        const maxScroll =
+            document.documentElement.scrollHeight - window.innerHeight;
 
         targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+
+        clearTimeout(wheelTimeout);
+        wheelTimeout = setTimeout(() => {
+            isWheelScrolling = false;
+        }, 200);
     }, { passive: false });
 
+    // Animación continua
     function smoothScroll() {
-        const currentScroll = window.scrollY;
-        const diff = targetScroll - currentScroll;
+        const current = window.scrollY;
+        const diff = targetScroll - current;
 
-        window.scrollBy(0, diff * 0.2);
+        // Evitar micro-rebotes cuando es "subir arriba"
+        if (targetScroll === 0 && Math.abs(diff) < 1) {
+            window.scrollTo(0, 0);
+            isButtonScrolling = false;
+        } else {
+            window.scrollBy(0, diff * 0.2);
+        }
 
         requestAnimationFrame(smoothScroll);
     }
 
     smoothScroll();
 }
+
+
+// --- Botón flotante para "Subir" ---
+const btnSubir = document.getElementById("btnSubir");
+
+let var_px_scroll = isDesktop ? 300 : 150;
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > var_px_scroll) {
+        btnSubir.classList.add("mostrar");
+        btnSubir.classList.remove("ocultar");
+    } else {
+        btnSubir.classList.remove("mostrar");
+        btnSubir.classList.add("ocultar");
+    }
+});
+
+btnSubir.addEventListener("click", () => {
+    if (isDesktop) {
+        isButtonScrolling = true;
+        targetScroll = 0;
+    } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+});
+
+
 
 // --- Música interactiva con el logo ---
 
@@ -263,45 +319,4 @@ document.addEventListener("dragstart", (e) => {
         e.preventDefault();
     }
 });
-
-// --- Botón flotante "Subir" ---
-const btnSubir = document.getElementById("btnSubir");
-
-let var_px_scroll = 100;
-
-if (window.innerWidth >= 1200) {
-
-    var_px_scroll = 300;
-
-} else {
-    
-    var_px_scroll = 150;
-}
-
-window.addEventListener("scroll", () => {
-    if (window.scrollY > var_px_scroll) {
-        btnSubir.classList.add("mostrar");
-        btnSubir.classList.remove("ocultar");
-    } else {
-        btnSubir.classList.remove("mostrar");
-        btnSubir.classList.add("ocultar");
-    }
-});
-
-btnSubir.addEventListener("click", () => {
-
-    if (window.innerWidth >= 1200) {
-        // Escritorio → usa scroll suave personalizado
-        targetScroll = 0;
-
-    } else {
-        // Móvil → usa scroll nativo
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-
-});
-
 

@@ -6,10 +6,10 @@
 }
 
 img {
-    -webkit-touch-callout: none; /* Evita callout en iOS/Android */
-    -webkit-user-drag: none; /* Evita arrastrar imágenes */
-    user-select: none; /* Evita selección */
-    pointer-events: auto; /* Mantiene clics funcionales */
+    -webkit-touch-callout: none;    /* Evita callout en iOS/Android */
+    -webkit-user-drag: none;        /* Evita arrastrar imágenes */
+    user-select: none;              /* Evita selección */
+    pointer-events: auto;           /* Mantiene clics funcionales */
 }
 
 :root {
@@ -48,18 +48,19 @@ h1 {
     text-align: center;
     line-height: 30px;
     color: var(--text-color-logo);
-    cursor: pointer; /* puntero al pasar mouse */
-    animation: latido 5s infinite;
+    cursor: pointer;                        /* puntero al pasar mouse */
+    /*animation: latido 5s infinite;*/
     /*border: 1px solid white;*/
     display: inline-block;
     padding: 2px 5px;
-    user-select: none; /* Evita selección */
+    user-select: none;                      /* Evita selección */
 }
 
 h1:hover {
-    color: rgb(241, 185, 2); /* más oscuro al pasar mouse */
+    color: rgb(241, 185, 2);
 }
 
+/*
 @keyframes latido {
     0% {
         transform: scale( 1 );
@@ -73,7 +74,7 @@ h1:hover {
         transform: scale( 1 );
     }
 }
-
+*/
 
 h2 {
 
@@ -91,22 +92,21 @@ h2 {
 
 
 .header {
-    position: fixed; /* Fija la barra arriba */
+    position: fixed;                        /* Fija la barra arriba */
     top: 0;
     left: 0;
-    width: 100%; /* ocupa todo el ancho */
+    width: 100%;
     grid-area: header;
     height: 80px;
     background-color: var(--header-bg);
     /*padding: 0px;*/
     /*border: 5px solid yellow;*/
     z-index: 1000;
-    /*Efecto LED PS5 */
-    text-align: center;
+    text-align: center;                     /*Efecto LED */
 }
 
 .header.header-small {
-    height: 50px; /* altura achicada */
+    height: 50px;
 }
 
 /* Ajustar h1 dentro del header */
@@ -115,7 +115,7 @@ h2 {
  }
 
 .header.header-small h1 {
-    font-size: 25px; /* tamaño reducido */
+    font-size: 25px;
     line-height: 10px;
 }
 
@@ -126,7 +126,6 @@ h2 {
     left: 0;
     width: 100%;
     height: 3px; /* grosor del LED */
-
     background: linear-gradient( 90deg, rgba(200,140,0,0) 0%, rgba(241,185,2,1) 35%, rgba(255,210,80,1) 50%, rgba(241,185,2,1) 65%, rgba(200,140,0,0) 100% );
     background-size: 200% 100%;
     animation: ledMove 6s linear infinite;
@@ -146,8 +145,8 @@ h2 {
 
 .producto-card {
     display: flex;
-    flex-direction: column; /* Apila imagen, título y precio verticalmente */
-    align-items: center; /* Centra horizontalmente */
+    flex-direction: column;     /* Apila imagen, título y precio verticalmente */
+    align-items: center;        /* Centra horizontalmente */
     width: 100%;
     text-align: center;
     transition: transform 0.3s ease, background-color 0.3s, color 0.3s;
@@ -165,18 +164,18 @@ h2 {
 
 /* Animación: Cuando el usuario pasa el mouse por encima */
 .producto-card:hover {
-    transform: scale(1.05); /* Hace que la tarjeta crezca un 5% */
+    transform: scale(1.05);                     /* Hace que la tarjeta crezca un 5% */
     box-shadow: 0 4px 8px rgba(0,0,0,0);
-    cursor: pointer; /* puntero al pasar mouse */
+    cursor: pointer;                            /* puntero al pasar mouse */
 }
 
 
 .producto-card img {
-    width: 100%; /* se ajusta al ancho de la tarjeta */
-    height: auto; /* mantiene proporción */
-    object-fit: cover; /* opcional: recorta si es necesario */
+    width: 100%;            /* se ajusta al ancho de la tarjeta */
+    height: auto;           /* mantiene proporción */
+    object-fit: cover;      /* opcional: recorta si es necesario */
     display: block;
-    margin: 0 auto; /* centra la imagen */
+    margin: 0 auto;         /* centra la imagen */
     /*border: 1px solid black;*/
 }
 
@@ -199,36 +198,36 @@ h2 {
 
 #modo-oscuro-btn {
     position: absolute;
-    right: 20px; /* distancia desde el borde derecho */
-    top: 50%; /* centra verticalmente */
-    transform: translateY(-50%); /* ajuste exacto de centrado vertical */
-    transform-origin: center; /* el zoom se hace desde el centro */
-    width: 40px; /* ancho del círculo */
-    height: 40px; /* alto del círculo */
-    border-radius: 40%; /* lo hace circular */
-    border: none; /* quitar borde por defecto */
-    background-color: var(--modo-oscuro-btn-bg); /* negro con 50% transparencia */
-    color: white; /* color del icono */
-    font-size: 18px; /* tamaño del icono */
-    cursor: pointer; /* puntero al pasar mouse */
+    right: 20px;                                        /* distancia desde el borde derecho */
+    top: 50%;                                           /* centra verticalmente */
+    transform: translateY(-50%);                        /* ajuste exacto de centrado vertical */
+    transform-origin: center;                           /* el zoom se hace desde el centro */
+    width: 40px;                                        /* ancho del círculo */
+    height: 40px;                                       /* alto del círculo */
+    border-radius: 40%;                                 /* lo hace circular */
+    border: none;                                       /* quitar borde por defecto */
+    background-color: var(--modo-oscuro-btn-bg);
+    color: white;                                       /* color del icono */
+    font-size: 18px;                                    /* tamaño del icono */
+    cursor: pointer;                                    /* puntero al pasar mouse */
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s, transform 0.2s;
-    user-select: none; /* Evita selección */
+    user-select: none;                                  /* Evita selección */
 }
 
 /* Hover: un ligero efecto para que se vea activo */
 #modo-oscuro-btn:hover {
-    background-color: rgba(0, 0, 0, 0.7); /* más oscuro al pasar mouse */
-    transform: translateY(-50%) scale(1.1); /* pequeño zoom */
+    background-color: rgba(0, 0, 0, 0.7);               /* más oscuro al pasar mouse */
+    transform: translateY(-50%) scale(1.1);             /* pequeño zoom */
 }
 
 .header.header-small #modo-oscuro-btn {
-    width: 30px; /* ancho del círculo */
-    height: 30px; /* alto del círculo */
-    border-radius: 40%; /* lo hace circular */
-    font-size: 18px; /* tamaño del icono */
+    width: 30px;                                        /* ancho del círculo */
+    height: 30px;                                       /* alto del círculo */
+    border-radius: 40%;                                 /* lo hace circular */
+    font-size: 18px;                                    /* tamaño del icono */
 }
 
 .subti {
@@ -248,10 +247,10 @@ footer {
     color: white;
     background-color: var(--header-bg);
     text-align: center;
-    position: fixed; /* Fija la barra arriba */
+    position: fixed;                        /* Fija la barra arriba */
     bottom: 0;
     left: 0;
-    width: 100%; /* ocupa todo el ancho */
+    width: 100%;                            /* ocupa todo el ancho */
 }
 
 /* --- BOTÓN FLOTANTE DE WHATSAPP --- */
@@ -259,7 +258,7 @@ footer {
     position: fixed;
     width: 30px;
     height: 30px;
-    bottom: 90px; /* queda sobre el footer */
+    bottom: 90px;                           /* queda sobre el footer */
     right: 10px;
     background-color: #25D366;
     border-radius: 40%;
@@ -287,9 +286,9 @@ footer {
     position: fixed;
     width: 30px;
     height: 30px;
-    bottom: 50px; /* Ubicado encima del de WhatsApp */
+    bottom: 50px;                   /* Ubicado encima del de WhatsApp */
     right: 10px;
-    background-color: #ffe600; /* color típico de ML */
+    background-color: #ffe600;      /* simular color logo de ML */
     border-radius: 40%;
     display: flex;
     align-items: center;
@@ -312,8 +311,8 @@ footer {
 
 .btn-subir {
     position: fixed;
-    bottom: 50px; /* arriba del footer */
-    left: 50%; /* centrar horizontalmente */
+    bottom: 50px;                                   /* arriba del footer */
+    left: 50%;                                      /* centrar horizontalmente */
     transform: translateX(-50%);
     width: 45px;
     height: 25px;
@@ -324,12 +323,12 @@ footer {
     font-size: 12px;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    display: none; /* oculto por defecto */
+    display: none;                                  /* oculto por defecto */
     align-items: center;
     justify-content: center;
     z-index: 9999;
     transition: all 0.3s ease;
-    pointer-events: none; /* se activa solo cuando se muestra */
+    pointer-events: none;                           /* se activa solo cuando se muestra */
 }
 
 .btn-subir.mostrar {
@@ -345,7 +344,7 @@ footer {
 }
 
 .btn-subir:hover{
-    transform: translateX(-50%) scale(1.2); /* aumenta tamaño*/
+    transform: translateX(-50%) scale(1.2);         /* aumenta tamaño*/
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
@@ -372,7 +371,7 @@ footer {
     }
 
     .header.header-small {
-        height: 80px; /* altura achicada */
+        height: 80px;                                   /* altura achicada */
     }
 
     /* Ajustar h1 dentro del header */
@@ -381,14 +380,14 @@ footer {
     }
 
     .header.header-small h1 {
-        font-size: 50px; /* tamaño reducido */
+        font-size: 50px;                                /* tamaño reducido */
         line-height: 70px;
     }
 
     .producto-card {
         /*border: 1px solid black;*/
         max-width: none;
-        /*margin: 0;*/ /* centra la tarjeta si sobra espacio */
+        /*margin: 0;*/                                  /* centra la tarjeta si sobra espacio */
     }
     .producto-card h3 {
         font-size: 1.5rem;
@@ -408,9 +407,9 @@ footer {
     }
 
     .producto-card img {
-        width: 100%; /* se ajusta al ancho de la tarjeta */
-        height: auto; /* mantiene proporción */
-        object-fit: cover; /* opcional: recorta si es necesario */
+        width: 100%;                /* se ajusta al ancho de la tarjeta */
+        height: auto;               /* mantiene proporción */
+        object-fit: cover;          /* opcional: recorta si es necesario */
     }
 
     h2 {
@@ -421,7 +420,7 @@ footer {
     }
 
     .header::after {
-        height: 8px; /* grosor del LED */
+        height: 8px;                /* grosor del LED */
     }
 
     .subti {
@@ -438,21 +437,21 @@ footer {
 
     #modo-oscuro-btn {
 
-        width: 80px; /* ancho del círculo */
-        height: 80px; /* alto del círculo */
-        font-size: 35px; /* tamaño del icono */
+        width: 80px;            /* ancho del círculo */
+        height: 80px;           /* alto del círculo */
+        font-size: 35px;        /* tamaño del icono */
     }
 
     .header.header-small #modo-oscuro-btn {
-        width: 50px; /* ancho del círculo */
-        height: 50px; /* alto del círculo */
-        font-size: 25px; /* tamaño del icono */
+        width: 50px;            /* ancho del círculo */
+        height: 50px;           /* alto del círculo */
+        font-size: 25px;        /* tamaño del icono */
     }
 
     .btn-wsp {
         width: 50px;
         height: 50px;
-        bottom: 130px; /* queda sobre el footer */
+        bottom: 130px;          /* queda sobre el footer */
         right: 20px;
 
     }
@@ -466,7 +465,7 @@ footer {
 
         width: 50px;
         height: 50px;
-        bottom: 65px; /* Ubicado encima del de WhatsApp */
+        bottom: 65px;           /* Ubicado encima del de WhatsApp */
         right: 20px;
       
     }
@@ -477,7 +476,7 @@ footer {
     }
 
     .btn-subir {
-        bottom: 60px; /* arriba del footer */
+        bottom: 60px;           /* arriba del footer */
         width: 65px;
         height: 40px;
         font-size: 20px;
