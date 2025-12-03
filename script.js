@@ -276,21 +276,24 @@ window.addEventListener("scroll", () => {
 
 btnSubir.addEventListener("click", () => {
     if (isDesktop) {
+        // tu animación de desktop ya funciona
         const scrollStep = () => {
             const current = window.scrollY;
             if (current > 0) {
-                window.scrollTo(0, current - Math.max(10, current * 0.2)); // nunca menor a 10px
+                window.scrollTo(0, current - Math.max(10, current * 0.2));
                 requestAnimationFrame(scrollStep);
             } else {
                 window.scrollTo(0, 0);
-                targetScroll = 0; // sincroniza targetScroll
+                targetScroll = 0;
             }
         };
         scrollStep();
     } else {
+        // Móvil: usar scroll nativo suave
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 });
+
 
 
 
