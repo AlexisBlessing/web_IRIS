@@ -45,6 +45,7 @@ async function cargarCatalogoDesdeTexto() {
         const nombresDeProductos = textContent.split('\n').filter(Boolean);
 
         nombresDeProductos.forEach((nombreLimpio, index) => {
+
             const numeroImagen = index + 1;
             const nombreArchivo = `${numeroImagen}.webp`;
 
@@ -61,13 +62,43 @@ async function cargarCatalogoDesdeTexto() {
             // Lazy loading inicial para la portada usando IntersectionObserver
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
+
                     if (entry.isIntersecting) {
-                        cargarImagenReal(entry.target, entry.target.dataset.srcPortadas);
-                        obs.unobserve(entry.target);
+
+                        const img = entry.target;
+
+                        // Cargar imagen real
+                        cargarImagenReal(img, img.dataset.srcPortadas);
+
+                        // Cuando la imagen termine de cargar, agregar título y precio
+                        img.onload = () => {
+                            const tarjeta = img.parentElement;
+
+                            // Revisamos si ya existe el título
+                            if (!tarjeta.querySelector('h3')) {
+                                const titulo = document.createElement('h3');
+                                titulo.textContent = nombreLimpio;
+                                titulo.style.opacity = 0;
+                                tarjeta.appendChild(titulo);
+
+                                const precio = document.createElement('p');
+                                precio.textContent = `Valor ${precioFijo}`;
+                                precio.style.opacity = 0;
+                                tarjeta.appendChild(precio);
+
+                                // Animación de aparición
+                                setTimeout(() => titulo.style.opacity = 1, 100);
+                                setTimeout(() => precio.style.opacity = 1, 200);
+                            }
+                        };
+
+                        obs.unobserve(img);
                     }
                 });
             });
+
             observer.observe(imagen);
+
 
             // --- Data-src para otras vistas (no se descargan todavía) ---
             imagen.dataset.srcHoja1 = `${folderHoja1Path}/${nombreArchivo}`;
@@ -143,31 +174,8 @@ async function cargarCatalogoDesdeTexto() {
 
             });
 
-            // --- Título y precio del producto ---
-            const titulo = document.createElement('h3');
-            titulo.textContent = nombreLimpio;
-
-            // Ocultamos el título inicialmente con un estilo inline simple
-            titulo.style.opacity = 0; 
-
-            const precio = document.createElement('p');
-            precio.textContent = `Valor ${precioFijo}`;
-
-            // Ocultamos el precio inicialmente
-            precio.style.opacity = 0;
-
             tarjeta.appendChild(imagen);
-            tarjeta.appendChild(titulo);
-            tarjeta.appendChild(precio);
-            contenedorGrid.appendChild(tarjeta);
-
-            setTimeout(() => {
-                titulo.style.opacity = 1; // Hacemos visible el título después de 200ms
-            }, 100);
-
-            setTimeout(() => {
-                precio.style.opacity = 1; // Hacemos visible el precio después de 400ms
-            }, 100);
+            contenedorGrid.appendChild(tarjeta); // agregamos solo la tarjeta con la imagen
 
         });
 
@@ -276,29 +284,21 @@ window.addEventListener("scroll", () => {
 
 btnSubir.addEventListener("click", () => {
     if (isDesktop) {
-        // Desktop: animación smooth
-        isButtonScrolling = true;       // bloquea scroll manual
-        const scrollAnim = () => {
+        const scrollStep = () => {
             const current = window.scrollY;
-            const diff = targetScroll - current;
-
-            if (Math.abs(diff) > 0.5) {
-                window.scrollBy(0, diff * 0.2);
-                requestAnimationFrame(scrollAnim);
+            if (current > 0) {
+                window.scrollTo(0, current - Math.max(10, current * 0.2)); // nunca menor a 10px
+                requestAnimationFrame(scrollStep);
             } else {
                 window.scrollTo(0, 0);
-                targetScroll = 0;
-                isButtonScrolling = false;
+                targetScroll = 0; // sincroniza targetScroll
             }
         };
-        targetScroll = 0;
-        scrollAnim();
+        scrollStep();
     } else {
-        // Móvil: scroll nativo, seguro para zoom
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 });
-
 
 
 
